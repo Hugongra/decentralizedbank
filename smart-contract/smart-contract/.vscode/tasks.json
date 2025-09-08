@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build:test",
+        "type": "shell",
+        "command": "pnpm --filter test run build",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "detail": "Building Test..."
+      },
+      {
+        "label": "build:watcher",
+        "type": "shell",
+        "command": "pnpm --filter watcher run build",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "detail": "Building Watcher..."
+      },
+      {
+        "label": "build:liquidator",
+        "type": "shell",
+        "command": "pnpm --filter liquidator run build",
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": [],
+        "detail": "Building Liquidator..."
+      }
+    ]
+}
+  

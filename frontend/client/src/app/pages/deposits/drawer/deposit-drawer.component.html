@@ -1,0 +1,49 @@
+<drawer-container [loading]="false" (close)="close()">
+    <div drawerBody>
+        <user-deposits-chart [pubKey]="publicKeyS()"></user-deposits-chart>
+        @if (depositDataS()) {
+            <div class="w-full flex flex-col gap-y-3 mt-3">
+                <div class="flex justify-between">
+                    <p>Deposit Address:</p>
+                    <address [address]="depositDataS().publicKey"></address>
+                </div>
+                <div class="flex justify-between">
+                    <p>Deposit Vault Address:</p>
+                    <address [address]="depositDataS().depositVaultPublicKey"></address>
+                </div>
+                <div class="flex justify-between">
+                    <p>Deposited</p>
+                    <div class="w-24 flex flex-col gap-y-1 text-end">
+                        <p>{{depositDataS().depositedAmount | numberFormatter:depositDataS().depositAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{depositDataS().depositedValue | numberFormatter}}</p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <p>Earned</p>
+                    <div class="w-24 flex flex-col gap-y-1 text-end">
+                        <p>{{depositDataS().earnedAmount | numberFormatter:depositDataS().depositAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{depositDataS().earnedValue | numberFormatter}}</p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <p>Available</p>
+                    <div class="w-24 flex flex-col gap-y-1 text-end">
+                        <p>{{depositDataS().availableAmount | numberFormatter:depositDataS().depositAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{depositDataS().availableValue | numberFormatter}}</p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <p>Collatered</p>
+                    <div class="w-24 flex flex-col gap-y-1 text-end">
+                        <p>{{depositDataS().collateredAmount | numberFormatter:depositDataS().depositAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{depositDataS().collateredValue | numberFormatter}}</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div drawerFooter #footer class="flex justify-end gap-x-5">
+        <button mat-flat-button class="secondary" (click)="withdraw()">Withdraw</button>
+        <button mat-flat-button (click)="deposit()">Deposit</button>
+    </div>
+</drawer-container>

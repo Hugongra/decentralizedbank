@@ -1,0 +1,153 @@
+<div class="w-full flex flex-col flex-auto items-center p-4" 
+    [ngClass]="{'justify-center': loadingS()}">
+    @if (loadingS()) {
+        <mat-spinner></mat-spinner>
+    } @else {
+        @if (mobileS()) {
+            <div class="h-fit w-full flex flex-col gap-y-3">
+                @for(transaction of transactionsS(); track transaction.id) {
+                    <ng-container [ngTemplateOutlet]="transactionMobileTemplate" [ngTemplateOutletContext] ="{transaction}"></ng-container>
+                }
+                <ng-template #transactionMobileTemplate let-transaction="transaction">
+                    <div class="flex flex-col border border-border rounded-sm">
+                        <div class="h-fit w-full flex flex-col bg-x-blue-800 rounded-t-md p-3">
+                            <div class="w-full justify-start flex items-center gap-x-3">
+                                @if (transaction.type === transactionType.BORROW || transaction.type === transactionType.REPAY) {
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.borrowToken.logoUrl">
+                                    <div class="flex flex-col">
+                                        <div class="flex gap-x-1 text-sm text-white">
+                                            <span>@if(transaction.type === transactionType.BORROW){+}@else{-}{{transaction.borrowAmount | numberFormatter:transaction.borrowToken.decimals}}</span>
+                                            <span>{{transaction.borrowToken.symbol}}</span>
+                                        </div>
+                                        <p class="text-xs text-x-blue-50">${{transaction.borrowValue | numberFormatter}}</p>
+                                    </div>
+                                } @else {
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.depositToken.logoUrl">
+                                    <div class="flex flex-col">
+                                        <div class="flex gap-x-1 text-sm text-white">
+                                            <span>@if(transaction.type === transactionType.DEPOSIT){-}@else{+}{{transaction.depositAmount | numberFormatter:transaction.depositToken.decimals}}</span>
+                                            <span>{{transaction.depositToken.symbol}}</span>
+                                        </div>
+                                        <p class="text-xs text-x-blue-50">${{transaction.depositValue | numberFormatter}}</p>
+                                    </div>
+                                }
+                            </div>
+                            @if (transaction.type === transactionType.BORROW || transaction.type === transactionType.REPAY) {
+                                <div class="w-full justify-end flex items-center gap-x-3">
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.collateralToken.logoUrl">
+                                    <div class="flex flex-col">
+                                        <div class="flex gap-x-1 text-sm text-white">
+                                            <span>-{{transaction.collateralAmount | numberFormatter:transaction.collateralToken.decimals}}</span>
+                                            <span>{{transaction.collateralToken.symbol}}</span>
+                                        </div>
+                                        <p class="text-xs text-x-blue-50">${{transaction.collateralValue | numberFormatter}}</p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <div class="flex justify-between bg-x-blue-500 rounded-b-md p-3 text-sm text-white">
+                            <p>{{transaction.type.toLowerCase()}}</p>
+                            <p>{{transaction.timestamp | date}}</p>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        } @else {
+            <div class="h-fit w-full max-w-screen-xl flex justify-between items-center bg-x-blue-800 rounded-t-md p-3 mt-3">
+                <ng-container [ngTemplateOutlet]="thTableTemplate" [ngTemplateOutletContext] ="{label:'type', name:'TYPE', width:'w-2/12'}"></ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" [ngTemplateOutletContext] ="{label:'asset', name:'ASSET', width:'w-2/12'}"></ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" [ngTemplateOutletContext] ="{label:'amount', name:'AMOUNT', width:'w-2/12'}"></ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" [ngTemplateOutletContext] ="{label:'value', name:'VALUE', width:'w-2/12'}"></ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" [ngTemplateOutletContext] ="{label:'timestamp', name:'TIMESTAMP', width:'w-2/12'}"></ng-container>
+            </div>
+            <div class="w-full max-w-screen-xl flex flex-col overflow-y-auto">
+                @for(transaction of transactionsS(); track transaction.id) {
+                    <ng-container [ngTemplateOutlet]="transactionDesktopTemplate" [ngTemplateOutletContext] ="{transaction, last: $last}"></ng-container>
+                }
+                <ng-template #transactionDesktopTemplate let-transaction="transaction" let-last="last">
+                    <div class="w-full flex justify-between p-3 bg-x-blue-500 hover:bg-x-blue-100"
+                        [ngClass]="{
+                        'rounded-b-md': last, 
+                        'border-b border-x-blue-100': !last}">
+                        <div class="w-2/12 justify-start flex items-center">
+                            <span class="text-sm text-white">{{transaction.type.toLowerCase()}}</span>
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            @if (transaction.type === transactionType.BORROW) {
+                                <div class="flex gap-x-1">
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.collateralToken.logoUrl">
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.borrowToken.logoUrl">
+                                </div>
+                            } @else if(transaction.type === transactionType.REPAY){
+                                <div class="flex gap-x-1">
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.borrowToken.logoUrl">
+                                    <img class="h-8 w-8 rounded-full" [src]="transaction.collateralToken.logoUrl">
+                                </div>
+                            } @else {
+                                <img class="h-8 w-8 rounded-full" [src]="transaction.depositToken.logoUrl">
+                            }
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center gap-x-1 text-white pr-2">
+                            @if (transaction.type === transactionType.BORROW || transaction.type === transactionType.REPAY) {
+                                <div class="flex flex-col">
+                                    <div class="flex justify-end gap-x-1 text-sm">
+                                        <span>@if(transaction.type === transactionType.REPAY){-}@else{+}{{transaction.borrowAmount | numberFormatter:transaction.borrowToken.decimals}}</span>
+                                        <span>{{transaction.borrowToken.symbol}}</span>
+                                    </div>
+                                    <div class="flex justify-end gap-x-1 text-xs text-x-blue-50">
+                                        <span>@if(transaction.type === transactionType.BORROW){-}@else{+}{{transaction.collateralAmount | numberFormatter:transaction.collateralToken.decimals}}</span>
+                                        <span>{{transaction.collateralToken.symbol}}</span>
+                                    </div>
+                                </div>
+                            } @else {
+                                <div class="flex gap-x-1 text-end text-sm">
+                                    <span>@if(transaction.type === transactionType.DEPOSIT){-}@else{+}{{transaction.depositAmount | numberFormatter:transaction.depositToken.decimals}}</span>
+                                    <span>{{transaction.depositToken.symbol}}</span>
+                                </div>
+                            }
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center gap-x-1 text-sm text-white pr-2">
+                            @if (transaction.type === transactionType.BORROW || transaction.type === transactionType.REPAY) {
+                                <div class="flex flex-col">
+                                    <div class="flex justify-end gap-x-1 text-sm">
+                                        <span>{{transaction.borrowValue | numberFormatter}}</span>
+                                        <span>$</span>
+                                    </div>
+                                    <div class="flex justify-end gap-x-1 text-xs text-x-blue-50">
+                                        <span>{{transaction.collateralValue | numberFormatter}}</span>
+                                        <span>$</span>
+                                    </div>
+                                </div>
+                            } @else {
+                                <div class="flex gap-x-1 text-end text-sm">
+                                    <span>{{transaction.depositValue | numberFormatter}}</span>
+                                    <span>$</span>
+                                </div>
+                            }
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            <p class="text-sm text-white">{{transaction.timestamp | date }}</p>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        }
+    }
+</div>
+
+<ng-template #thTableTemplate let-label="label" let-name="name" let-width="width">
+    <div class="flex items-center gap-x-1 text-white" [class]="width"
+        [ngClass]="name === 'BORROW_NAME' || name === 'TYPE' ? 'justify-start' : 'justify-end'">
+        <p class="text-xs">{{label}}</p>
+        @if (selectedFilterS()?.name === name && selectedFilterS()?.sort === 'DESC') {
+            <mat-icon class="arrow-selected cursor-pointer" [svgIcon]="'heroicons_solid:chevron-up'" (click)="selectFilter(name, 'ASC')"></mat-icon>
+        } @else if (selectedFilterS()?.name === name && selectedFilterS()?.sort === 'ASC') {
+            <mat-icon class="arrow-selected cursor-pointer" [svgIcon]="'heroicons_solid:chevron-down'" (click)="selectFilter(name, 'DESC')"></mat-icon>
+        } @else {
+            <div class="flex flex-col">
+                <mat-icon class="arrow cursor-pointer" [svgIcon]="'heroicons_solid:chevron-up'" (click)="selectFilter(name, 'ASC')"></mat-icon>
+                <mat-icon class="arrow cursor-pointer" [svgIcon]="'heroicons_solid:chevron-down'" (click)="selectFilter(name, 'DESC')"></mat-icon>
+            </div>
+        }
+    </div>
+</ng-template>

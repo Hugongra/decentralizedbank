@@ -1,0 +1,40 @@
+<main class="w-full flex flex-col flex-auto items-center space-y-6 p-2">
+    @if (bankS()) {
+        <div class="w-full max-w-screen-lg flex flex-col rounded-lg p-5 bg-x-blue-800">
+            <div class="w-full flex items-center gap-x-10">
+                <h1 class="w-40">Publickey</h1>
+                <address [address]="bankS()?.pubkey"></address>
+            </div>
+            @if (bankS().init) {
+                <div class="w-full flex items-center gap-x-20 mt-5">
+                    <div class="flex items-center gap-x-10">
+                        <h1 class="w-40">Defcon</h1>
+                        <span class="text-white text-lg">{{bankS().defcon}}</span>
+                    </div>
+                    <mat-slide-toggle [checked]="resetDefconS()" (toggleChange)="onDefconChange()">Reset</mat-slide-toggle>
+                </div>
+            }
+            <form class="w-full flex flex-col gap-y-5 mt-5" [formGroup]="formGroup">
+                <div class="flex items-end gap-x-10">
+                    <h1 class="w-40">Liquidator</h1>
+                    <mat-form-field class="w-80" subscriptSizing="dynamic">
+                        <input matInput formControlName="liquidator"/>
+                    </mat-form-field>
+                </div>
+                <div class="flex items-end gap-x-10">
+                    <h1 class="w-40">Fee Vault</h1>
+                    <mat-form-field class="w-80" subscriptSizing="dynamic">
+                        <input matInput formControlName="feeVault"/>
+                    </mat-form-field>
+                </div>
+            </form>
+            <div class="w-full flex items-center justify-center mt-10">
+                @if (bankS().init) {
+                    <button class="w-20" mat-flat-button (click)="updateBank()">Update</button>
+                } @else {
+                    <button class="w-20" mat-flat-button (click)="createBank()">Create</button>
+                }
+            </div>
+        </div>
+    }
+</main>

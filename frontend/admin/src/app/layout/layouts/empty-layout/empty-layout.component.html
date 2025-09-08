@@ -1,0 +1,24 @@
+<!-- Wrapper -->
+<div class="h-svh h-lvh flex flex-col flex-auto">
+
+    <!-- Header -->
+    <div class="h-16 w-full relative flex flex-0 items-center px-4 md:px-6 z-49 shadow bg-gray-900 print:hidden">
+        <img class="h-12" src="/icon.svg" alt="logo">
+        <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <!-- *ngIf="true" hack is required here for router-outlet to work correctly.
+             Otherwise, layout changes won't be registered and the view won't be updated! -->
+        <router-outlet *ngIf="true" class="layout-router-outlet"></router-outlet>
+    </div>
+
+</div>
+<!-- Footer -->
+<footer class="footer">
+    <div class="h-10 w-full flex flex-0 justify-between items-center px-6 border-t border-slate-800">
+        <p class="text-white">GetBank 2024</p>
+    </div>
+</footer>

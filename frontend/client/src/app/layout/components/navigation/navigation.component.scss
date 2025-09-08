@@ -1,0 +1,42 @@
+:host {
+    position: sticky;
+    top: 0;
+    height: 100%;
+    z-index: 999;
+    &.over {
+        position: absolute;
+        > div {
+            > div:nth-child(1) {
+                width: calc(100% - 1px);
+                box-shadow: 1px 0 0px 0 rgba(0, 0, 0, 0.1), 2px 0 2px -1px rgba(0, 0, 0, 0.1);
+            }
+        }
+    }
+    > div {
+        // Header
+        > div:nth-child(1) {
+            img {
+                height: 2.5rem;
+                transition: width 0.3s ease;
+                &.small {
+                    height: 1.5rem;
+                }
+            }
+        }
+        // Body
+        > div:nth-child(2) {
+            width: calc(100% - 1px);
+            box-shadow: 1px 0 0px 0 rgba(0, 0, 0, 0.1), 2px 0 2px -1px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+}
+
+mat-icon {
+    transition: transform 0.3s ease;
+    transform: scale(1);
+    &.big {
+        transform: scale(1.2);
+    }
+    
+}

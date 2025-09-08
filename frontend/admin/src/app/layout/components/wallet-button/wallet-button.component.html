@@ -1,0 +1,21 @@
+@if (publicKey()) {
+    <button mat-fab extended [matMenuTriggerFor]="menu">
+      <p>{{ publicKey() | slice: 0:4 }}...{{ publicKey() | slice: -4 }}</p>
+      <mat-icon [svgIcon]="'heroicons_outline:chevron-down'"></mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="copyAddress()">
+        <mat-icon [svgIcon]="'heroicons_outline:clipboard'"></mat-icon>
+        <span>Copy Address</span>
+      </button>
+      <button mat-menu-item (click)="disconnect.emit()">
+        <mat-icon [svgIcon]="'heroicons_outline:arrow-left-on-rectangle'"></mat-icon>
+        <span>Disconnect</span>
+      </button>
+    </mat-menu>
+  } @else {
+    <button mat-fab extended (click)="openWalletModal()">
+      Connect
+      <mat-icon [svgIcon]="'heroicons_outline:wallet'"></mat-icon>
+    </button>
+}

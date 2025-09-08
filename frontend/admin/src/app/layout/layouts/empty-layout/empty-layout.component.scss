@@ -1,0 +1,8 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #1a1a1a; /* Match layout background */
+    border-top: 1px solid #2a2a2a; /* Subtle border for separation */
+    z-index: 1000; /* Ensure it appears above everything else */
+}

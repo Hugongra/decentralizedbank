@@ -1,0 +1,13 @@
+{
+  "name": "watcher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/watcher-main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

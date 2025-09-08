@@ -1,0 +1,29 @@
+<div class="w-full flex flex-col items-center justify-center space-y-4 bg-gray-900 p-4" id="wallet-dialog">
+    <div class="h-10 w-full flex justify-between items-center">
+      <button mat-icon-button>
+        <mat-icon class="text-white" [svgIcon]="'heroicons_outline:question-mark-circle'"></mat-icon>
+      </button>
+      <h2 class="text-md text-white font-semibold">Connect Wallet</h2>
+      <button mat-icon-button (click)="close()">
+        <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+      </button>
+    </div>
+    <div class="w-full flex flex-col gap-y-2" id="wallet-list">
+      <div class="w-full flex flex-col gap-y-2" id="wallet-list">
+        <!--<button class="flex items-center gap-x-3 bg-secondary cursor-pointer p-2 rounded-lg" (click)="selectWallet(WalletType.PHANTOM)">
+          <img class="h-10 w-10 rounded-xl" src="/images/wallets/phantom-logo.png" alt="Phantom"/>
+          <span class="text-sm text-white">Phantom</span>
+        </button>
+        <button class="flex items-center gap-x-3 bg-secondary cursor-pointer p-2 rounded-lg" (click)="selectWallet(WalletType.SOLFLARE)">
+          <img class="h-10 w-10 rounded-xl" src="/images/wallets/solflare-logo.png" alt="Solflare"/>
+          <span class="text-sm text-white">Solflare</span>
+        </button>-->
+        <button class="flex items-center gap-x-3 bg-secondary cursor-pointer p-2 rounded-lg" (click)="selectWallet(WalletType.BACKPACK)">
+          <img class="h-10 w-10 rounded-xl" src="/images/wallets/backpack.png" alt="Backpack"/>
+          <span class="text-sm text-white">Backpack</span>
+        </button>
+      </div>
+    </div>
+</div>
+
+

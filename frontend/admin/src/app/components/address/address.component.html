@@ -1,0 +1,4 @@
+<div class="flex items-center gap-x-3">
+    <p>{{ addressS() | slice: 0:4 }}...{{ addressS() | slice: -4 }}</p>
+    <mat-icon class="cursor-pointer text-white" [svgIcon]="'heroicons_outline:clipboard'" (click)="copyAddress()"></mat-icon>
+</div>

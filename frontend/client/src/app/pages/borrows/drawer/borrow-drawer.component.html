@@ -1,0 +1,46 @@
+<drawer-container [loading]="false" (close)="close()">
+    <div drawerBody>
+        <user-borrows-chart [pubKey]="publicKeyS()"></user-borrows-chart>
+        @if (borrowDataS()) {
+            <div class="w-full flex flex-col gap-y-3 mt-3">
+                <div class="flex justify-between">
+                    <p>Borrow Address:</p>
+                    <address [address]="borrowDataS().publicKey"></address>
+                </div>
+                <div class="flex justify-between">
+                    <p>Borrow Asset Address:</p>
+                    <address [address]="borrowDataS().borrowAsset.publicKey"></address>
+                </div>
+                <div class="flex justify-between">
+                    <p>Collateral Asset Address:</p>
+                    <address [address]="borrowDataS().collateralAsset.publicKey"></address>
+                </div>
+                <div class="flex justify-between">
+                    <p>Borrowed</p>
+                    <div class="w-1/2 flex flex-col gap-y-1 text-end">
+                        <p>{{borrowDataS().borrowedAmount | numberFormatter:borrowDataS().borrowAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{borrowDataS().borrowedValue | numberFormatter}}</p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <p>Owed</p>
+                    <div class="w-1/2 flex flex-col gap-y-1 text-end">
+                        <p>{{borrowDataS().owedAmount | numberFormatter:borrowDataS().borrowAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{borrowDataS().owedValue | numberFormatter}}</p>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <p>Collatered</p>
+                    <div class="w-1/2 flex flex-col gap-y-1 text-end">
+                        <p>{{borrowDataS().collateredAmount | numberFormatter:borrowDataS().collateralAsset.mintDecimals}}</p>
+                        <p class="text-xs text-x-blue-50">${{borrowDataS().collateredValue | numberFormatter}}</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div drawerFooter #footer class="flex justify-end gap-x-5">
+        <button mat-flat-button class="secondary" (click)="repay()">Repay</button>
+        <button mat-flat-button (click)="borrow()">Borrow</button>
+    </div>
+</drawer-container>

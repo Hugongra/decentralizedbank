@@ -1,0 +1,29 @@
+[package]
+name = "get_bank"
+version = "0.1.0"
+description = "Created with Anchor"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "get_bank"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[dependencies]
+anchor-lang = { version = "0.30.1", features = ["init-if-needed"] }
+anchor-spl = "0.30.0"
+borsh = "0.10.3"
+uint = "=0.9.1"
+arrayref = "0.3.6"
+pyth-solana-receiver-sdk = "0.5.0"
+hex = "0.4"
+
+[dev-dependencies]
+rand = "0.8.5"

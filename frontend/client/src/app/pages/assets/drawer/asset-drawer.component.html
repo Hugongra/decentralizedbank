@@ -1,0 +1,130 @@
+<drawer-container [loading]="loadingS()" (close)="close()">
+    @if (assetS()) {
+        <mat-tab-group drawerBody (selectedTabChange)="onTabChange($event)" animationDuration="500">
+            <mat-tab label="Params">
+                @if (tabIndexS() == 0) {
+                    <assets-utilization-rate-chart [pubKey]="assetS()?.publicKey"></assets-utilization-rate-chart>
+                }
+                <div class="flex flex-col gap-y-3 mt-3">
+                    <div class="flex justify-between items-center">
+                        <p>Optimal Utilization Rate</p>
+                        <p>{{assetS().config.optimalUtilizationRate}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Deposit limit:</p>
+                        <p>{{assetS()?.config.depositLimit}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Borrow limit:</p>
+                        <p>{{assetS()?.config.borrowLimit}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Borrow Fee:</p>
+                        <p>{{assetS()?.config.borrowFee}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Borow weight:</p>
+                        <p>{{assetS()?.config.borrowWeight}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Open LTV:</p>
+                        <p>{{assetS()?.config.openLtv}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Close LTV:</p>
+                        <p>{{assetS()?.config.closeLtv}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Max close LTV:</p>
+                        <p>{{assetS()?.config.maxCloseLtv}}%</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Liquidation Fee:</p>
+                        <p>{{assetS()?.config.liquidationFee}}%</p>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Rates">
+                @if (tabIndexS() == 1) {
+                    <assets-aprs-chart [pubKey]="assetS()?.publicKey"></assets-aprs-chart>
+                }
+                <div class="flex flex-col gap-y-3 mt-3">
+                    <div class="flex justify-between">
+                        <p>Deposit APR:</p>
+                        <div class="w-24 flex flex-col gap-y-1">
+                            <p class="text-end">{{assetS()?.depositApr}}%</p>
+                            <div class="flex justify-between text-xs text-x-blue-50">
+                                <p>min</p>
+                                <p>{{assetS()?.config.minDepositApr}}%</p>
+                            </div>
+                            <div class="flex justify-between text-xs text-x-blue-50">
+                                <p>max</p>
+                                <p>{{assetS()?.config.maxDepositApr}}%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="w-24 flex flex-col gap-y-1">
+                            <p>Borrow APR:</p>
+                            <div class="flex justify-between text-xs text-x-blue-50">
+                                <p>Slope 1</p>
+                                <p>{{assetS()?.config.rSlope1}}%</p>
+                            </div>
+                            <div class="flex justify-between text-xs text-x-blue-50">
+                                <p>Slope 2</p>
+                                <p>{{assetS()?.config.rSlope2}}%</p>
+                            </div>
+                        </div>
+                        <div class="w-24 flex flex-col gap-y-1">
+                            <p class="text-end">{{assetS()?.borrowApr}}%</p>
+                            <div class="flex justify-between text-xs text-x-blue-50">
+                                <p>min</p>
+                                <p>{{assetS()?.config.minBorrowApr}}%</p>
+                            </div>
+                            <div class="flex justify-between text-xs text-x-blue-50">
+                                <p>max</p>
+                                <p>{{assetS()?.config.maxBorrowApr}}%</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Addresses">
+                <div class="flex flex-col gap-y-3 mt-3">
+                    <div class="flex justify-between">
+                        <p>Asset:</p>
+                        <address [address]="assetS()?.publicKey"></address>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Token Mint:</p>
+                        <address [address]="assetS()?.mintPubkey"></address>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Token Representative Mint:</p>
+                        <address [address]="assetS()?.representativeMintPubkey"></address>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Reserve Vault:</p>
+                        <address [address]="assetS()?.reserveVaultPublicKey"></address>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Collateral Vault:</p>
+                        <address [address]="assetS()?.collateralVaultPublicKey"></address>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>Oracle Id:</p>
+                        <address [address]="assetS()?.config.oracleId"></address>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    }
+    @if (connectedS()) {
+        <div drawerFooter #footer class="flex justify-end gap-x-5">
+            @if (depositedS()) {
+                <button mat-flat-button class="secondary" (click)="borrow()">Borrow</button>
+            }
+            <button mat-flat-button (click)="deposit()">Deposit</button>
+        </div>
+    }
+</drawer-container>

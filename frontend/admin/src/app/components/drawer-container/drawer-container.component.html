@@ -1,0 +1,27 @@
+<!-- Header -->
+<div id="drawer-header">
+    <button mat-icon-button (click)="onClickClose()">
+        <mat-icon [svgIcon]="'heroicons_outline:arrow-left'"></mat-icon>
+    </button>
+    <!-- Header Sufix -->
+    <div id="header-sufix-container">
+        <ng-content select="[drawerHeader]"></ng-content>
+    </div>
+</div>
+<!-- Body -->
+<div id="drawer-body" [style]="{'height': footer ? 'calc(100% - (120px + 0.57px))' : 'calc(100% - 56px)'}">
+    @if (loading()) {
+        <div class="h-full w-full flex justify-center items-center">
+            <mat-spinner diameter="80"></mat-spinner>
+        </div>
+    } @else {
+        <ng-content select="[drawerBody]"></ng-content>
+    }
+</div>
+@if (footer) {
+    <!-- Footer -->
+    <div id="drawer-footer">
+        <ng-content select="[drawerFooter]" #footer></ng-content>
+    </div>
+}
+

@@ -1,0 +1,13 @@
+@if (loadingS()) {
+    <div class="h-full w-full flex justify-center items-center">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+} @else {
+    <div class="h-full w-full flex flex-col gap-y-2 mt-5 mb-10">
+        <div class="flex items-center justify-between">
+            <h1 class="text-white text-lg font-bold">Utilization Rate</h1>
+            <date-filter [timeUnit]="timeUnitS()" (timeUnitChange)="onDateFilterChange($event)"></date-filter>
+        </div>
+        <canvasjs-chart [options]="chartOptionsS()"></canvasjs-chart>
+    </div>
+}

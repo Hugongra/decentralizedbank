@@ -1,0 +1,46 @@
+
+
+:host {
+    width: 100%;
+    display: block;
+    input {
+        padding: 0px 10px 39px 65px;
+        color: white;
+        caret-color: #0037FF;
+        font-size: 1rem;
+        text-align: right;
+        background-color: transparent;
+        border: 1px solid #0037FF;
+        &:focus {
+            outline: 2px solid #0037FF;
+            outline-offset: 2px;
+        }
+        &:focus-visible {
+            outline: none;
+            box-shadow: 0 0 4px #0037FF;
+        }
+    }
+    #max-button {
+        height: 45px;
+        width: 50px;
+    }
+    #currency-info {
+        position: absolute;
+        height: 40px;
+        top: 32px;
+        right: 0;
+        z-index: 2;
+    }
+    #invert-button {
+        scale: 0.8;
+    }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+}

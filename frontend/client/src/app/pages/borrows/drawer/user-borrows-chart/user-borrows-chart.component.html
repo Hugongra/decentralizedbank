@@ -1,0 +1,17 @@
+@if (loadingS()) {
+    <div class="h-full w-full flex justify-center items-center">
+        <mat-spinner diameter="50"></mat-spinner>
+    </div>
+} @else {
+    <div class="h-full w-full flex flex-col gap-y-2 mt-5 mb-10">
+        <div class="flex items-center justify-between">
+            <h1 class="text-white text-lg font-bold">Borrows</h1>
+            <mat-button-toggle-group [value]="recordTypeS()" (change)="onRecordTypeChange($event.value)">
+                <mat-button-toggle value="amount">Amount</mat-button-toggle>
+                <mat-button-toggle value="value">Value</mat-button-toggle>
+            </mat-button-toggle-group>
+            <date-filter label="Deposits" [timeUnit]="timeUnitS()" (timeUnitChange)="onDateFilterChange($event)"></date-filter>
+        </div>
+        <canvasjs-chart [options]="chartOptionsS()"></canvasjs-chart>
+    </div>
+}

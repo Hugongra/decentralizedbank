@@ -1,0 +1,137 @@
+<mat-drawer-container class="flex flex-col flex-auto" (backdropClick)="close()">
+    <mat-drawer-content class="w-full flex flex-col flex-auto p-4">
+        <button mat-flat-button (click)="createAsset()">Create Asset</button>
+        @if (mobileS()) {
+            <div class="h-fit w-full flex flex-col gap-y-3 mt-5">
+                @for(asset of assetsS(); track asset.meta.symbol) {
+                    <div class="flex flex-col border border-border rounded-sm" (click)="open(asset.state.pubKey)">
+                        <div class="h-fit w-full flex items-center bg-x-blue-800 rounded-t-md p-3">
+                            <div class="w-1/3 justify-start flex items-center gap-x-3">
+                                <img class="h-8 w-8 rounded-full" [src]="asset.meta.logoUrl" alt="token-icon">
+                                <div class="flex flex-col mr-3">
+                                    <p class="text-sm">{{asset.meta.symbol}}</p>
+                                    <p class="text-xs text-x-blue-50">${{asset.meta.tokenId | tokenPrice | compactNumber}}>
+                                </div>
+                            </div>
+                            <div class="w-1/3 flex flex-col mr-3">
+                                <p class="text-sm text-center">Deposit Apr</p>
+                                <p class="text-xs text-center">{{asset.state.depositApr}}%</p>
+                            </div>
+                            <div class="w-1/3 flex flex-col mr-3">
+                                <p class="text-sm text-end">Borrow Apr</p>
+                                <p class="text-xs text-end">{{asset.state.borrowApr}}%</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col rounded-b-md p-3 bg-x-blue-500">
+                            <div class="flex justify-between">
+                                <p class="text-xs">LTV/BW</p>
+                                <p class="text-xs">{{asset.state.config.openLtv}}/{{asset.state.config.borrowWeight}}%</p>
+                            </div>
+                            <div class="flex justify-between">
+                                <p class="text-xs">Deposits</p>
+                                <div class="flex gap-x-1">
+                                    <p class="text-xs text-x-blue-50 text-end">${{(asset.state.depositAmount * asset.meta.tokenId | tokenPrice) | compactNumber}}</p>
+                                    <p class="text-xs">{{asset.state.depositAmount| compactNumber}}</p>
+                                    <p class="text-xs">{{asset.meta.symbol}}</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <p class="text-xs">Borrows</p>
+                                <div class="flex gap-x-1">
+                                    <p class="text-xs text-x-blue-50 text-end">${{(asset.state.borrowAmount * asset.meta.tokenId | tokenPrice) | compactNumber}}</p>
+                                    <p class="text-xs">{{asset.state.borrowAmount | compactNumber}}</p>
+                                    <p class="text-xs">{{asset.meta.symbol}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        } @else {
+            <div class="h-fit w-full flex items-center bg-x-blue-800 rounded-t-md p-3 mt-5">
+                <ng-container [ngTemplateOutlet]="thTableTemplate" 
+                    [ngTemplateOutletContext] ="{label:'Asset name', name:'NAME'}">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" 
+                    [ngTemplateOutletContext] ="{label:'Deposits', name:'DEPOSIT'}">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" 
+                    [ngTemplateOutletContext] ="{label:'Borrows', name:'BORROW'}">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" 
+                    [ngTemplateOutletContext] ="{label:'LTV/BW', name:'LTV/BW'}">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" 
+                    [ngTemplateOutletContext] ="{label:'Deposit APR', name:'DEPOSIT APR'}">
+                </ng-container>
+                <ng-container [ngTemplateOutlet]="thTableTemplate" 
+                    [ngTemplateOutletContext] ="{label:'BORROW APR', name:'BORROW APR'}">
+                </ng-container>
+            </div>
+            <div class="w-full flex flex-col overflow-y-auto">
+                @for(asset of assetsS(); track asset.meta.symbol) {
+                    <div class="w-full flex p-3 bg-x-blue-500 hover:bg-x-blue-100 cursor-pointer"
+                        [ngClass]="{
+                            'rounded-b-md': $last, 
+                            'border-b border-x-blue-100 ': !$last
+                        }"
+                        (click)="open(asset.state.pubKey)">
+                        <div class="w-3/12 justify-start flex items-center gap-x-3">
+                            <img class="h-8 w-8 rounded-full" [src]="asset.meta.logoUrl" alt="token-icon">
+                            <div class="flex flex-col mr-3">
+                                <p class="text-sm">{{asset.meta.symbol}}</p>
+                                <p class="text-xs text-x-blue-50">${{asset.meta.tokenId | tokenPrice | compactNumber}}</p>
+                            </div>
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            <div class="flex flex-col mr-3">
+                                <p class="text-sm text-end">{{asset.state.depositAmount | compactNumber}}</p>
+                                <p class="text-xs text-x-blue-50 text-end">${{asset.state.depositAmount * asset.meta.tokenId | tokenPrice| compactNumber}}</p>
+                            </div>
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            <div class="flex flex-col mr-3">
+                                <p class="text-sm text-end">{{asset.state.borrowAmount | compactNumber}}</p>
+                                <p class="text-xs text-x-blue-50 text-end">${{asset.state.borrowAmount * asset.meta.tokenId | tokenPrice | compactNumber}}</p>
+                            </div>
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            <p class="text-sm text-end mr-3">{{asset.state.config.openLtv}}/{{asset.state.config.borrowWeight}}</p>
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            <p class="text-sm text-end mr-3">{{asset.state.depositApr}}%</p>
+                        </div>
+                        <div class="w-2/12 justify-end flex items-center">
+                            <p class="text-sm text-end mr-3">{{asset.state.borrowApr}}%</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </mat-drawer-content>
+    <mat-drawer class="w-full h-full sm:w-128" #matDrawer
+        [mode]="'over'"
+        [opened]="false"
+        [position]="'end'"
+        (closed)="close()"
+        [disableClose]="false">
+        <router-outlet></router-outlet>
+    </mat-drawer>
+</mat-drawer-container>
+
+<ng-template #thTableTemplate let-label="label" let-name="name">
+    <div class="flex items-center gap-x-1 text-white" [ngClass]="name === 'NAME' ? 'w-3/12 justify-start' : 'w-2/12 justify-end'">
+        <p class="text-xs">{{label}}</p>
+        @if (selectedFilterS()?.name === name && selectedFilterS()?.sort === 'DOWN') {
+            <mat-icon class="arrow-selected cursor-pointer" [svgIcon]="'heroicons_solid:chevron-up'" (click)="selectFilter(name, 'UP')"></mat-icon>
+        }
+        @else if (selectedFilterS()?.name === name && selectedFilterS()?.sort === 'UP') {
+            <mat-icon class="arrow-selected cursor-pointer" [svgIcon]="'heroicons_solid:chevron-down'" (click)="selectFilter(name, 'DOWN')"></mat-icon>
+        }@else {
+            <div class="flex flex-col">
+                <mat-icon class="arrow cursor-pointer" [svgIcon]="'heroicons_solid:chevron-up'" (click)="selectFilter(name, 'UP')"></mat-icon>
+                <mat-icon class="arrow cursor-pointer" [svgIcon]="'heroicons_solid:chevron-down'" (click)="selectFilter(name, 'DOWN')"></mat-icon>
+            </div>
+        }
+    </div>
+</ng-template>

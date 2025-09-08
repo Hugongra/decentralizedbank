@@ -1,0 +1,10 @@
+:host {
+    #alert-container {
+        width: 450px;
+        left: calc(50% - 54px);
+        @media (max-width: 600px) {
+            left: 54px;
+            width: calc(100% - 48px);
+        }
+    }
+}

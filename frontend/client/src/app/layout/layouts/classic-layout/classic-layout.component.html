@@ -1,0 +1,59 @@
+<!-- Wrapper -->
+<div class="relative h-screen w-full flex flex-auto">
+    <!-- Notifications container -->
+    @if(alertsS().length) {
+        <div class="fixed bottom-0 flex flex-col gap-y-3 z-[50] p-5" id="alert-container">
+            @for(alert of alertsS(); track alert.id) {
+                <alert 
+                    [type]="alert.type"
+                    [id]="alert.id"
+                    [name]="alert.id"
+                    [appearance]="alert.appearance" 
+                    [dismissible]="true">
+                    {{alert.message}}
+                </alert>
+            }
+        </div>
+    }
+    <!-- Navigation -->
+    <app-navigation 
+        [@openClose]="animationStateS()"
+        [ngClass]="{'over': isNavigationOverS()}">
+    </app-navigation>
+    @if (isNavigationOverS()) {
+        <div class="h-full w-full fixed top-0 bg-slate-500 opacity-40" id="overlay"
+            (click)="close()">
+        </div>
+    }
+    <!-- Content -->
+    <div class="min-w-0 flex flex-col flex-auto">
+        <!-- Navbar -->
+        <app-navbar></app-navbar>
+        <!-- Body -->
+        <div class="flex flex-col flex-auto bg-slate-200"
+            [ngClass]="{'overflow-auto': overflowActiveS()}">
+            <router-outlet class="layout-router-outlet" *ngIf="true"></router-outlet>
+        </div>
+        <!-- Footer -->
+        <div class="w-full">
+            <!--@if (!isMobileS()) {
+                <div class="h-32 w-full flex justify-between items-center bg-w-orange-400 text-white p-10">
+                    <div class="flex flex-col text-sm font-light gap-y-2">
+                        <span>Copyright © 2024 Wellic</span>
+                        <span>Derechos reservados</span>
+                    </div>
+                    <div class="flex flex-col gap-y-2">
+                        <img src="assets/logo/logo.svg" alt="">
+                        <span class="text-sm font-light">el placer de superarte</span>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <img class="h-6 w-6" src="assets/icons/instagram.svg" alt="instagram-logo">
+                        <img class="h-6 w-6" src="assets/icons/facebook-white.svg" alt="facebook-logo">
+                        <img class="h-6 w-6" src="assets/icons/x.svg" alt="x-logo">
+                        <img class="h-6 w-6" src="assets/icons/linkedin.svg" alt="linkedin-logo">
+                    </div>
+                </div>
+            }-->
+        </div>
+    </div>
+</div>

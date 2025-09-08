@@ -1,0 +1,47 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Start Test",
+      "preLaunchTask": "build:test",
+      "program": "${workspaceFolder}/apps/test/dist/src/test-main.js",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/apps/test",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Start Watcher",
+      "preLaunchTask": "build:watcher",
+      "program": "${workspaceFolder}/apps/watcher/dist/src/watcher-main.js",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/apps/watcher",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Start Liquidator",
+      "preLaunchTask": "build:liquidator",
+      "program": "${workspaceFolder}/apps/liquidator/dist/src/liquidator-main.js",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/apps/liquidator",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}

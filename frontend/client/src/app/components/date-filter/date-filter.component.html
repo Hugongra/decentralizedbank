@@ -1,0 +1,16 @@
+<div class="flex justify-between justify-center">
+    <button mat-flat-button [matMenuTriggerFor]="menu">
+        <p>{{timeUnit().toLocaleLowerCase()}}</p>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onDateFilterChange(TimeUnit.DAYS)">
+            <p>day</p>
+        </button>
+        <button mat-menu-item (click)="onDateFilterChange(TimeUnit.MONTHS)">
+            <p>month</p>
+        </button>
+        <button mat-menu-item (click)="onDateFilterChange(TimeUnit.YEARS)">
+            <p>year</p>
+        </button>
+    </mat-menu>
+</div>

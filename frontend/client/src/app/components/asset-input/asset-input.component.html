@@ -1,0 +1,22 @@
+<div class="h-20 relative w-full">
+    @if (max() > 0) {
+        <div class="absolute left-3 top-1/2 z-[2] -translate-y-2/4">
+            <button mat-fab id="max-button" (click)="maxAmount()">MAX</button>
+        </div>
+    }
+    <input #inputElement class="h-20 w-full flex border border-border rounded-md" type="number" [value]="amount()" (input)="onAmountChange(inputElement.value)">
+    <div class="flex justify-end items-center" id="currency-info">
+        <div class="flex flex-col justify-center items-end gap-y-1 text-right text-sm text-white">
+            @if (invertedS()){
+                <span>$</span>
+                <span>{{symbol}} {{priceS() | numberFormatter:decimals:false}}</span>
+            } @else {
+                <span>{{symbol}}</span>
+                <span>$ {{priceS().toFixed(2)}}</span>
+            }
+        </div>
+        <button mat-icon-button (click)="invert()" id="invert-button">
+            <mat-icon [svgIcon]="'heroicons_outline:arrow-path'"></mat-icon>
+        </button>
+    </div>
+</div>

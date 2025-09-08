@@ -1,0 +1,16 @@
+.anchor
+.DS_Store
+target
+**/*.rs.bk
+test-ledger
+.yarn
+
+apps/node_modules
+apps/**/dist
+apps/test/logs/*
+!apps/test/logs/.gitkeep
+apps/test/wallets/bots/*
+**/nohup.out
+scripts/test-ledger
+apps/**/.env
+apps/**/src/get_bank.ts

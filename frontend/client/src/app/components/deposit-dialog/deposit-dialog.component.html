@@ -1,0 +1,34 @@
+<div class="w-full flex flex-col flex-auto space-y-4 p-2">
+    <div class="h-8 relative flex items-center justify-center">
+        <div class="absolute left-0">
+            <button class="absolute left-0" mat-icon-button (click)="close()">
+                <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+            </button>
+        </div>
+    </div>
+    @if (loadingS()) {
+        <div class="w-full flex flex-col flex-auto justify-center items-center">
+            <mat-spinner diameter="80"></mat-spinner>
+        </div>
+    } @else {
+        @if (depositStateS()?.init) {
+            <div class="w-full flex flex-col flex-auto justify-center items-center gap-y-10 p-2" [@slideInLeft]="animation">
+                <asset-input 
+                    [symbol]="assetS().symbol"
+                    [decimals]="assetStateS().mintDecimals"
+                    [price]="priceS()"
+                    [amount]="amountS()"
+                    [max]="maxS()"
+                    (amountChange)="onAmountChange($event)"
+                    (invertedChange)="onInvertedChange($event)">
+                </asset-input>
+                <button mat-flat-button [disabled]="amountS() <= 0 || amountS() > maxS()" (click)="deposit()">Deposit</button>
+            </div>
+        } @else {
+            <div class="w-full flex flex-col flex-auto justify-center items-center gap-y-10 p-2" @slideInLeft>
+                <p class="text-lg text-white font-bold text-center">You need to create a {{assetS().symbol}} deposit account.</p>
+                <button mat-flat-button (click)="createDeposit()">Create Account</button>
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,46 @@
+// -----------------------------------------------------------------------------------------------------
+// @ Basis
+// -----------------------------------------------------------------------------------------------------
+
+# Create new Keypair
+solana-keygen new --outfile <<name>>.json
+
+# Inspect public key
+solana-keygen pubkey <<name>>.json
+
+# Create seeds
+solana-keygen recover 'prompt://?key=0/0' -o <<name>>.json --force
+Note: generate random words here https://solflare.com/onboard/create
+
+# Run the localnet
+solana-test-validator --ledger test-ledger --limit-ledger-size 216000 --reset
+
+Flags
+--reset: Is used to restart the blockchain, removing all accounts and balances.
+
+# Add SOL
+solana airdrop <<amount>> <<address>>
+
+Flags
+--keypair: Instead of address can be referenced a keypair
+
+// -----------------------------------------------------------------------------------------------------
+// @ SPL Token
+// -----------------------------------------------------------------------------------------------------
+
+# Create a new token: This command is used to generate a mint account, a mint account represents a spl token, it contain all metada such us name, decimals, authority, logo etc.
+spl-token create-token
+
+Flags
+--decimals <<int>>: Specifies the decimal numbers
+--mint-authority <<address>>: Specifies the mint authority
+
+# Create an account: Generates an account of a mint address inside a wallet, is the account that is gonna be used as a vault of spl tokens.
+spl-token create-account --owner <<address/keypair>> --fee-payer <<keypair>> <<mint>>
+
+# Inspect token accounts and balances
+spl-token accounts --owner <<address/keypair>>
+
+# Mint tokens: Is the equivalent of airdrop but in SPL token.
+spl-token mint <<mint>> <<amount>> <<address>>
+

@@ -1,0 +1,13 @@
+{
+  "name": "liquidator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/liquidator-main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

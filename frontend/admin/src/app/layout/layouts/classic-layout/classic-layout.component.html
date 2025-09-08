@@ -1,0 +1,38 @@
+<!-- Wrapper -->
+<div class="relative h-screen w-full flex flex-auto">
+    <!-- Notifications container -->
+    @if(alertsS().length) {
+        <div class="fixed bottom-0 flex flex-col gap-y-3 z-[50] p-5" id="alert-container">
+            @for(alert of alertsS(); track alert.id) {
+                <alert 
+                    [type]="alert.type"
+                    [id]="alert.id"
+                    [name]="alert.id"
+                    [appearance]="alert.appearance" 
+                    [dismissible]="true">
+                    {{alert.message}}
+                </alert>
+            }
+        </div>
+    }
+    <!-- Navigation -->
+    <app-navigation 
+        [@openClose]="animationStateS()"
+        [ngClass]="{'over': isNavigationOverS()}">
+    </app-navigation>
+    @if (isNavigationOverS()) {
+        <div class="h-full w-full fixed top-0 bg-slate-500 opacity-40" id="overlay"
+            (click)="close()">
+        </div>
+    }
+    <!-- Content -->
+    <div class="min-w-0 flex flex-col flex-auto">
+        <!-- Navbar -->
+        <app-navbar></app-navbar>
+        <!-- Body -->
+        <div class="flex flex-col flex-auto bg-slate-50"
+            [ngClass]="{'overflow-auto': overflowActiveS()}">
+            <router-outlet class="layout-router-outlet" *ngIf="true"></router-outlet>
+        </div>
+    </div>
+</div>

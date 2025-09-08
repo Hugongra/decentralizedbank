@@ -1,0 +1,1045 @@
+alert {
+    display: block;
+
+    //Common
+    .alert-container {
+        position: relative;
+        display: flex;
+        padding: 16px;
+        font-size: 14px;
+        line-height: 1;
+
+        //All icons
+        .mat-icon {
+            color: currentColor !important;
+        }
+
+        //Icon
+        .alert-icon {
+            display: flex;
+            align-items: flex-start;
+
+            .alert-custom-icon,
+            .alert-default-icon {
+                display: none;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+
+                &:not(:empty) {
+                    display: flex;
+                    margin-right: 12px;
+                }
+            }
+
+            .alert-default-icon {
+
+                .mat-icon {
+                    
+                }
+            }
+
+            .alert-custom-icon {
+                display: none;
+
+                &:not(:empty) {
+                    display: flex;
+
+                    + .alert-default-icon {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        //Content
+        .alert-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1;
+
+            //Title
+            .alert-title {
+                display: none;
+                font-weight: 600;
+                line-height: 20px;
+
+                &:not(:empty) {
+                    display: block;
+
+                    //Alert that comes after the title
+                    + .alert-message {
+
+                        &:not(:empty) {
+                            margin-top: 4px;
+                        }
+                    }
+                }
+            }
+
+            //Alert
+            .alert-message {
+                display: none;
+                line-height: 20px;
+
+                &:not(:empty) {
+                    display: block;
+                }
+            }
+        }
+
+        //Dismiss button
+        .alert-dismiss-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 32px !important;
+            min-width: 32px !important;
+            height: 32px !important;
+            min-height: 32px !important;
+            line-height: 32px !important;
+
+            .mat-icon {
+                
+            }
+        }
+    }
+
+    //Dismissible
+    &.alert-dismissible {
+
+        .alert-container {
+
+            .alert-content {
+                margin-right: 32px;
+            }
+        }
+    }
+
+    &:not(.alert-dismissible) {
+
+        .alert-container {
+
+            .alert-dismiss-button {
+                display: none !important;
+            }
+        }
+    }
+
+    //Border
+    &.alert-appearance-border {
+
+        .alert-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+            .alert-border {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 4px;
+            }
+
+            .alert-message {
+                color: rgb(75 85 99);
+            }
+        }
+
+        //Primary
+        &.alert-type-primary {
+
+            .alert-container {
+
+                .alert-border {
+                    background-color: #0037FF;
+                }
+
+                .alert-title,
+                .alert-icon {
+                    color: #0037FF
+                }
+
+                .dark & {
+                    background-color: rgb(55 65 81);
+
+                    .alert-border {
+                        background-color: #0037FF;
+                    }
+
+                    .alert-title,
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        color: rgb(209 213 219);
+                    }
+
+                    code {
+                        background-color: rgb(156 163 175);
+                        color: rgb(31 41 55);
+                    }
+                }
+            }
+        }
+
+        //Success
+        &.alert-type-success {
+
+            .alert-container {
+
+                .alert-border {
+                    background-color: rgb(34 197 94);
+                }
+
+                .alert-title,
+                .alert-icon {
+                    color: rgb(34 197 94);
+                }
+
+                .dark & {
+                    background-color: rgb(55 65 81);
+
+                    .alert-border {
+                        background-color: rgb(74 222 128);
+                    }
+
+                    .alert-title,
+                    .alert-icon {
+                        color: rgb(74 222 128);
+                    }
+
+                    .alert-message {
+                        color: rgb(209 213 219);
+                    }
+
+                    code {
+                        background-color: rgb(156 163 175);
+                        color: rgb(31 41 55);
+                    }
+                }
+            }
+        }
+
+        //Error
+        &.alert-type-error {
+
+            .alert-container {
+
+                .alert-border {
+                    background-color: rgb(220 38 38);
+                }
+
+                .alert-title,
+                .alert-icon {
+                    color: rgb(185 28 28);
+                }
+
+                .dark & {
+                    background-color: rgb(55 65 81);
+
+                    .alert-border {
+                        background-color: rgb(248 113 113);
+                    }
+
+                    .alert-title,
+                    .alert-icon {
+                        color: rgb(248 113 113);
+                    }
+
+                    .alert-message {
+                        color: rgb(209 213 219);
+                    }
+
+                    code {
+                        background-color: rgb(156 163 175);
+                        color: rgb(31 41 55);
+                    }
+                }
+            }
+        }
+    }
+
+    //Fill
+    &.alert-appearance-fill {
+
+        .alert-container {
+            border-radius: 6px;
+
+            .alert-dismiss-button {
+                color: white;
+            }
+        }
+
+        //Primary
+        &.alert-type-primary {
+
+            .alert-container {
+                background-color: #0037FF;
+
+                .alert-icon {
+                    color: white;
+                }
+
+                .alert-title {
+                    color: white;
+                }
+
+                .alert-message {
+                    color: white;
+                }
+
+                code {
+                    color: white;
+                }
+            }
+        }
+
+        //Success
+        &.alert-type-success {
+
+            .alert-container {
+                background-color: rgb(22 163 74);
+
+                .alert-icon {
+                    color: white;
+                }
+
+                .alert-title {
+                    color: white;
+                }
+
+                .alert-message {
+                    color: rgb(220 252 2319);
+                }
+
+                code {
+                    background-color: rgb(187 247 208);
+                    color: rgb(31 41 55);
+                }
+            }
+        }
+
+        //Error
+        &.alert-type-error {
+
+            .alert-container {
+                background-color: rgb(220 38 38);
+
+                .alert-icon {
+                    color: white;
+                }
+
+                .alert-title {
+                    color: white;
+                }
+
+                .alert-message {
+                    color: rgb(254 226 226);
+                }
+
+                code {
+                    background-color: rgb(254 202 202);
+                    color: rgb(153 27 27);
+                }
+            }
+        }
+    }
+
+    /*//Outline
+    &.alert-appearance-outline {
+
+        .alert-container {
+            border-radius: 6px;
+        }
+
+        //Primary
+        &.alert-type-primary {
+
+            .alert-container {
+                @apply bg-primary-50 ring-1 ring-primary-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-primary-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-primary-900;
+                }
+
+                .alert-message {
+                    @apply text-primary-700;
+                }
+
+                code {
+                    @apply text-primary-800 bg-primary-200;
+                }
+
+                .dark & {
+                    @apply bg-primary-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-primary-200;
+                    }
+                }
+            }
+        }
+
+        //Accent
+        &.alert-type-accent {
+
+            .alert-container {
+                @apply bg-accent-100 ring-1 ring-accent-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-accent-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-accent-900;
+                }
+
+                .alert-message {
+                    @apply text-accent-700;
+                }
+
+                code {
+                    @apply text-accent-800 bg-accent-200;
+                }
+
+                .dark & {
+                    @apply bg-accent-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-accent-200;
+                    }
+                }
+            }
+        }
+
+        //Warn
+        &.alert-type-warn {
+
+            .alert-container {
+                @apply bg-warn-50 ring-1 ring-warn-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-warn-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-warn-900;
+                }
+
+                .alert-message {
+                    @apply text-warn-700;
+                }
+
+                code {
+                    @apply text-warn-800 bg-warn-200;
+                }
+
+                .dark & {
+                    @apply bg-warn-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-warn-200;
+                    }
+                }
+            }
+        }
+
+        //Basic
+        &.alert-type-basic {
+
+            .alert-container {
+                @apply bg-gray-100 ring-1 ring-gray-400 ring-inset;
+
+                .alert-icon {
+                    color: rgb(75 85 99);
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-gray-900;
+                }
+
+                .alert-message {
+                    @apply text-gray-700;
+                }
+
+                code {
+                    @apply bg-gray-200 text-gray-800;
+                }
+
+                .dark & {
+                    background-color: rgb(75 85 99);
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-gray-200;
+                    }
+                }
+            }
+        }
+
+        //Info
+        &.alert-type-info {
+
+            .alert-container {
+                @apply bg-blue-50 ring-1 ring-blue-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-blue-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-blue-900;
+                }
+
+                .alert-message {
+                    @apply text-blue-700;
+                }
+
+                code {
+                    @apply bg-blue-200 text-blue-800;
+                }
+
+                .dark & {
+                    background-color: rgb(37 99 235);
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-blue-200;
+                    }
+                }
+            }
+        }
+
+        //Success
+        &.alert-type-success {
+
+            .alert-container {
+                @apply bg-green-50 ring-1 ring-green-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-green-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-green-900;
+                }
+
+                .alert-message {
+                    @apply text-green-700;
+                }
+
+                code {
+                    @apply bg-green-200 text-green-800;
+                }
+
+                .dark & {
+                    @apply bg-green-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-green-200;
+                    }
+                }
+            }
+        }
+
+        //Warning
+        &.alert-type-warning {
+
+            .alert-container {
+                @apply bg-amber-50 ring-1 ring-amber-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-amber-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-amber-900;
+                }
+
+                .alert-message {
+                    @apply text-amber-700;
+                }
+
+                code {
+                    @apply bg-amber-200 text-amber-800;
+                }
+
+                .dark & {
+                    @apply bg-amber-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-amber-200;
+                    }
+                }
+            }
+        }
+
+        //Error
+        &.alert-type-error {
+
+            .alert-container {
+                @apply bg-red-50 ring-1 ring-red-400 ring-inset;
+
+                .alert-icon {
+                    @apply text-red-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-red-900;
+                }
+
+                .alert-message {
+                    @apply text-red-700;
+                }
+
+                code {
+                    @apply bg-red-200 text-red-800;
+                }
+
+                .dark & {
+                    @apply bg-red-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-red-200;
+                    }
+                }
+            }
+        }
+    }
+
+    //Soft
+    &.alert-appearance-soft {
+
+        .alert-container {
+            border-radius: 6px;
+        }
+
+        //Primary
+        &.alert-type-primary {
+
+            .alert-container {
+                @apply bg-primary-50;
+
+                .alert-icon {
+                    @apply text-primary-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-primary-900;
+                }
+
+                .alert-message {
+                    @apply text-primary-700;
+                }
+
+                code {
+                    @apply text-primary-800 bg-primary-200;
+                }
+
+                .dark & {
+                    @apply bg-primary-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-primary-200;
+                    }
+                }
+            }
+        }
+
+        //Accent
+        &.alert-type-accent {
+
+            .alert-container {
+                @apply bg-accent-100;
+
+                .alert-icon {
+                    @apply text-accent-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-accent-900;
+                }
+
+                .alert-message {
+                    @apply text-accent-700;
+                }
+
+                code {
+                    @apply text-accent-800 bg-accent-200;
+                }
+
+                .dark & {
+                    @apply bg-accent-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-accent-200;
+                    }
+                }
+            }
+        }
+
+        //Warn
+        &.alert-type-warn {
+
+            .alert-container {
+                @apply bg-warn-50;
+
+                .alert-icon {
+                    @apply text-warn-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-warn-900;
+                }
+
+                .alert-message {
+                    @apply text-warn-700;
+                }
+
+                code {
+                    @apply text-warn-800 bg-warn-200;
+                }
+
+                .dark & {
+                    @apply bg-warn-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-warn-200;
+                    }
+                }
+            }
+        }
+
+        //Basic
+        &.alert-type-basic {
+
+            .alert-container {
+                background-color: rgb(243 244 246);
+
+                .alert-icon {
+                    color: rgb(75 85 99);
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-gray-900;
+                }
+
+                .alert-message {
+                    @apply text-gray-700;
+                }
+
+                code {
+                    background-color: rgb(229 231 235);
+                    color: rgb(31 41 55);
+                }
+
+                .dark & {
+                    background-color: rgb(75 85 99);
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-gray-200;
+                    }
+                }
+            }
+        }
+
+        //Info
+        &.alert-type-info {
+
+            .alert-container {
+                @apply bg-blue-50;
+
+                .alert-icon {
+                    @apply text-blue-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-blue-900;
+                }
+
+                .alert-message {
+                    @apply text-blue-700;
+                }
+
+                code {
+                    background-color: rgb(191 219 254);
+                    @apply text-blue-800;
+                }
+
+                .dark & {
+                    background-color: rgb(37 99 235);
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-blue-200;
+                    }
+                }
+            }
+        }
+
+        //Success
+        &.alert-type-success {
+
+            .alert-container {
+                @apply bg-green-50;
+
+                .alert-icon {
+                    @apply text-green-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-green-900;
+                }
+
+                .alert-message {
+                    @apply text-green-700;
+                }
+
+                code {
+                    background-color: rgb(187 247 208);
+                    @apply text-green-800;
+                }
+
+                .dark & {
+                    @apply bg-green-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-green-200;
+                    }
+                }
+            }
+        }
+
+        //Warning
+        &.alert-type-warning {
+
+            .alert-container {
+                @apply bg-amber-50;
+
+                .alert-icon {
+                    @apply text-amber-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-amber-900;
+                }
+
+                .alert-message {
+                    @apply text-amber-700;
+                }
+
+                code {
+                    background-color: rgb(253 230 138);
+                    @apply text-amber-800;
+                }
+
+                .dark & {
+                    @apply bg-amber-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-amber-200;
+                    }
+                }
+            }
+        }
+
+        // Error
+        &.alert-type-error {
+
+            .alert-container {
+                @apply bg-red-50;
+
+                .alert-icon {
+                    @apply text-red-600;
+                }
+
+                .alert-title,
+                .alert-dismiss-button {
+                    @apply text-red-900;
+                }
+
+                .alert-message {
+                    @apply text-red-700;
+                }
+
+                code {
+                    background-color: rgb(254 202 202);
+                    @apply text-red-800;
+                }
+
+                .dark & {
+                    @apply bg-red-600;
+
+                    .alert-icon {
+                        color: white;
+                    }
+
+                    .alert-title,
+                    .alert-dismiss-button {
+                        color: white;
+                    }
+
+                    .alert-message {
+                        @apply text-red-200;
+                    }
+                }
+            }
+        }
+    }*/
+}

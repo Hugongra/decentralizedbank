@@ -1,0 +1,30 @@
+{
+    "/api/bank": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/bank": "/api/getbank/v1/bank"
+        }
+    },
+    "/api/borrow": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/borrow": "/api/getbank/v1/borrow"
+        }
+    },
+    "/api/deposit": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/deposit": "/api/getbank/v1/deposit"
+        }
+    },
+    "/api/transaction": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "pathRewrite": {
+            "^/api/transaction": "/api/getbank/v1/transaction"
+        }
+    }
+}

@@ -1,0 +1,45 @@
+<div class="w-full flex flex-col flex-auto space-y-4 p-2">
+    <div class="h-8 relative flex items-center justify-center">
+        <div class="absolute left-0">
+            <button class="absolute left-0" mat-icon-button (click)="close()">
+                <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+            </button>
+        </div>
+        @if (!depositDataS()) {
+            <p class="text-lg text-white font-bold text-center leading-6">Select a collateral</p>
+        }
+    </div>
+    @if (loadingS()) {
+        <div class="w-full flex flex-col flex-auto justify-center items-center">
+            <mat-spinner diameter="80"></mat-spinner>
+        </div>
+    } @else {
+        @if (depositDataS()) {
+            <div class="w-full flex flex-col flex-auto justify-center items-center gap-y-10 p-2" [@slideInLeft]="animation">
+                <asset-input 
+                    [symbol]="borrowAssetS().symbol"
+                    [price]="borrowPriceS()"
+                    [decimals]="borrowAssetStateS().mintDecimals"
+                    [amount]="amountS()"
+                    [max]="maxS()"
+                    (amountChange)="onAmountChange($event)"
+                    (invertedChange)="onInvertedChange($event)">
+                </asset-input>
+                <button mat-flat-button [disabled]="amountS() <= 0 || amountS() > maxS()" (click)="borrow()">Borrow</button>
+            </div>
+        } @else {
+            <div class="w-full flex flex-col flex-auto justify-center items-center gap-y-1 p-2">
+                @for (depositData of depositDataListS(); track depositData.publicKey.toBase58()) {
+                    <div class="w-full flex justify-center items-center hover:bg-x-blue-500 cursor-pointer p-2 rounded-lg" (click)="selectCollateral(depositData.publicKey)">
+                        <img class="h-8 w-8 rounded-full" [src]="depositData.depositAsset.logoUrl" alt="token-icon">
+                        <div class="w-1/2 flex flex-col text-end">
+                            <p class="text-sm text-white">{{depositData.depositAsset.symbol}}</p>
+                            <p class="text-sm text-white">{{depositData.availableAmount | numberFormatter:depositData.depositAsset.mintDecimals}}</p>
+                            <p class="text-xs text-x-blue-50">${{depositData.availableValue | numberFormatter:2:false}}</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    }
+</div>

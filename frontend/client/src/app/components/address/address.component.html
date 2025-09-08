@@ -1,0 +1,4 @@
+<button class="flex items-center gap-x-3 hover:text-x-blue-500" (click)="copyAddress()">
+    <p>{{ addressS() | slice: 0:4 }}...{{ addressS() | slice: -4 }}</p>
+    <mat-icon [svgIcon]="'heroicons_outline:clipboard'"></mat-icon>
+</button>

@@ -1,0 +1,158 @@
+<drawer-container [loading]="false" (close)="close()">
+    <form class="w-full flex flex-col gap-y-8" drawerBody [formGroup]="form">
+        <div class="flex flex-col gap-y-1">
+            <p class="text-lg font-bold">Administrative</p>
+            <mat-divider></mat-divider>
+        </div>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Mint Address</mat-label>
+            <input matInput formControlName="mint"/>
+            @if (form.get('mint').hasError('required')) {
+                <mat-error>This field is required</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Representative Mint Address</mat-label>
+            <input matInput formControlName="representativeMint"/>
+            @if (form.get('representativeMint').hasError('required')) {
+                <mat-error>This field is required</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Oracle ID Address</mat-label>
+            <input matInput formControlName="oracleId"/>
+            @if (form.get('oracleId').hasError('required')) {
+                <mat-error>This field is required</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Optimal Utilization Rate</mat-label>
+            <input matInput formControlName="optimalUtilizationRate"/>
+            <span matTextSuffix>%</span>
+            <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'optimalUtilizationRate'}"></ng-container>
+        </mat-form-field>
+        <div class="flex flex-col gap-y-1">
+            <p class="text-lg font-bold">Deposits</p>
+            <mat-divider></mat-divider>
+        </div>
+        <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Deposit Limit</mat-label>
+            <input matInput formControlName="depositLimit"/>
+            <span matTextSuffix>%</span>
+            <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'depositLimit'}"></ng-container>
+        </mat-form-field>
+        <div class="w-full flex justify-between">
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Min Deposit Apr</mat-label>
+                <input matInput formControlName="minDepositApr"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'minDepositApr'}"></ng-container>
+            </mat-form-field>
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Max Deposit Apr</mat-label>
+                <input matInput formControlName="maxDepositApr"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'maxDepositApr'}"></ng-container>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <p class="text-lg font-bold">Borrows</p>
+            <mat-divider></mat-divider>
+        </div>
+        <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+            <mat-label>Borrow Limit</mat-label>
+            <input matInput formControlName="borrowLimit"/>
+            <span matTextSuffix>%</span>
+            <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'borrowLimit'}"></ng-container>
+        </mat-form-field>
+        <div class="w-full flex justify-between">
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Min Borrow Apr</mat-label>
+                <input matInput formControlName="minBorrowApr"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'minBorrowApr'}"></ng-container>
+            </mat-form-field>
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Max Borrow Apr</mat-label>
+                <input matInput formControlName="maxBorrowApr"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'maxBorrowApr'}"></ng-container>
+            </mat-form-field>
+        </div>
+        <div class="w-full flex justify-between">
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>R Slope 1</mat-label>
+                <input matInput formControlName="rSlope1"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'rSlope1'}"></ng-container>
+            </mat-form-field>
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>R Slope 2</mat-label>
+                <input matInput formControlName="rSlope2"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'rSlope2'}"></ng-container>
+            </mat-form-field>
+        </div>
+        <div class="w-full flex justify-between">
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Borrow Fee</mat-label>
+                <input matInput formControlName="borrowFee"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'borrowFee'}"></ng-container>
+            </mat-form-field>
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Borrow Weight</mat-label>
+                <input matInput formControlName="borrowWeight"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'borrowWeight'}"></ng-container>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col gap-y-1">
+            <p class="text-lg font-bold">Risk Managments</p>
+            <mat-divider></mat-divider>
+        </div>
+        <div class="w-full flex justify-between">
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Open LTV</mat-label>
+                <input matInput formControlName="openLtv"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'openLtv'}"></ng-container>
+            </mat-form-field>
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Close LTV</mat-label>
+                <input matInput formControlName="closeLtv"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'closeLtv'}"></ng-container>
+            </mat-form-field>
+        </div>
+        <div class="w-full flex justify-between">
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Max Close LTV</mat-label>
+                <input matInput formControlName="maxCloseLtv"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'maxCloseLtv'}"></ng-container>
+            </mat-form-field>
+            <mat-form-field class="w-5/12" subscriptSizing="dynamic" appearance="outline">
+                <mat-label>Liquidation Fee</mat-label>
+                <input matInput formControlName="liquidationFee"/>
+                <span matTextSuffix>%</span>
+                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'liquidationFee'}"></ng-container>
+            </mat-form-field>
+        </div>
+    </form>
+    <div drawerFooter #footer class="flex justify-end gap-x-5">
+        <button mat-flat-button [disabled]="form.invalid" (click)="createAsset()">Create</button>
+    </div>
+</drawer-container>
+
+<ng-template #percentagesValidatorsTemplate let-formControlName="formControlName">
+    @if (form.get(formControlName).hasError('required')) {
+        <mat-error>This field is required</mat-error>
+    }
+    @if (form.get(formControlName).hasError('min')) {
+        <mat-error>Must be higher than 0</mat-error>
+    }
+    @if (form.get(formControlName).hasError('max')) {
+        <mat-error>Must be lower than 100</mat-error>
+    }
+</ng-template>

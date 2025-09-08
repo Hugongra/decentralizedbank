@@ -1,0 +1,27 @@
+<div class="w-full flex flex-col flex-auto space-y-4 p-2">
+    <div class="h-8 relative flex items-center justify-center">
+        <div class="absolute left-0">
+            <button class="absolute left-0" mat-icon-button (click)="close()">
+                <mat-icon [svgIcon]="'heroicons_outline:x-mark'"></mat-icon>
+            </button>
+        </div>
+    </div>
+    @if (loadingS()) {
+        <div class="w-full flex flex-col flex-auto justify-center items-center">
+            <mat-spinner diameter="80"></mat-spinner>
+        </div>
+    } @else {
+        <div class="w-full flex flex-col flex-auto justify-center items-center gap-y-10 p-2">
+            <asset-input 
+                [symbol]="depositDataS().depositAsset.symbol"
+                [price]="depositDataS().depositAsset.price"
+                [decimals]="depositDataS().depositAsset.mintDecimals"
+                [max]="maxS()"
+                [amount]="amountS()" 
+                (amountChange)="onAmountChange($event)"
+                (invertedChange)="onInvertChange($event)">
+            </asset-input>
+            <button mat-flat-button [disabled]="amountS() <= 0 || amountS() > maxS()" (click)="withdraw()">Withdraw</button>
+        </div>
+    }
+</div>

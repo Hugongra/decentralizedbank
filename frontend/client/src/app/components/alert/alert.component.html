@@ -1,0 +1,59 @@
+<div class="alert-container" @shake @fadeOutRight
+    *ngIf="!dismissible || dismissible && !dismissed">
+
+    <!-- Border -->
+    <div
+        class="alert-border"
+        *ngIf="appearance === 'border'"></div>
+
+    <!-- Icon -->
+    <div
+        class="alert-icon"
+        *ngIf="showIcon">
+
+        <!-- Custom icon -->
+        <div class="alert-custom-icon">
+            <ng-content select="[kamalaAlertIcon]"></ng-content>
+        </div>
+
+        <!-- Default icons -->
+        <div class="alert-default-icon">
+
+            <mat-icon
+                *ngIf="type === 'primary'"
+                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'success'"
+                [svgIcon]="'heroicons_solid:check-circle'"></mat-icon>
+
+            <mat-icon
+                *ngIf="type === 'error'"
+                [svgIcon]="'heroicons_solid:x-circle'"></mat-icon>
+
+        </div>
+
+    </div>
+
+    <!-- Content -->
+    <div class="alert-content">
+
+        <div class="alert-title">
+            <ng-content select="[kamalaAlertTitle]"></ng-content>
+        </div>
+
+        <div class="alert-message">
+            <ng-content></ng-content>
+        </div>
+
+    </div>
+
+    <!-- Dismiss button -->
+    <button
+        class="alert-dismiss-button"
+        mat-icon-button
+        (click)="dismiss()">
+        <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+    </button>
+
+</div>

@@ -1,0 +1,253 @@
+<drawer-container [loading]="loadingS()" (close)="close()">
+    <button drawerHeader mat-icon-button (click)="toggleEdit()">
+        @if (editableS()) {
+            <mat-icon class="text-x-blue-500" [svgIcon]="'heroicons_solid:pencil'"></mat-icon>
+        } @else {
+            <mat-icon [svgIcon]="'heroicons_outline:pencil'"></mat-icon>
+        }
+    </button>
+    @if (extendedAssetStateS()) {
+        <mat-tab-group drawerBody (selectedTabChange)="onTabChange($event)" animationDuration="500">
+            <mat-tab label="Config">
+                @if (tabS() == 0) {
+                    <form class="flex flex-col gap-y-3 mt-3" [formGroup]="form">
+                        <div class="flex justify-between items-center">
+                            <p>Optimal Utilization Rate</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="optimalUtilizationRate"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'optimalUtilizationRate'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.optimalUtilizationRate}}%</p>
+                            }
+                        </div>
+                        <div class="flex flex-col gap-y-1">
+                            <p class="text-lg font-bold">Deposits</p>
+                            <mat-divider></mat-divider>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Deposit Limit</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="depositLimit"/>
+                                    <span matTextSuffix>%</span>
+                                </mat-form-field>
+                                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'depositLimit'}"></ng-container>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.depositLimit}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Min Deposit Apr</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="minDepositApr"/>
+                                    <span matTextSuffix>%</span>
+                                </mat-form-field>
+                                <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'minDepositApr'}"></ng-container>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.minDepositApr}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Max Deposit Apr</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="maxDepositApr"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'maxDepositApr'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.maxDepositApr}}%</p>
+                            }
+                        </div>
+                        <div class="flex flex-col gap-y-1">
+                            <p class="text-lg font-bold">Borrows</p>
+                            <mat-divider></mat-divider>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Borrow Limit</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="borrowLimit"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'borrowLimit'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.borrowLimit}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Min Borrow Apr</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="minBorrowApr"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'minBorrowApr'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.minBorrowApr}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Max Borrow Apr</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="maxBorrowApr"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'maxBorrowApr'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.maxBorrowApr}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>R Solpe 1</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="rSlope1"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'rSlope1'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.rSlope1}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>R Slope 2</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="rSlope2"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'rSlope2'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.rSlope2}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Borrow Weight</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="borrowWeight"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'borrowWeight'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.borrowWeight}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Borrow Fee</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="borrowFee"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'borrowFee'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.borrowFee}}%</p>
+                            }
+                        </div>
+                        <div class="flex flex-col gap-y-1">
+                            <p class="text-lg font-bold">Risk Managments</p>
+                            <mat-divider></mat-divider>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Open LTV</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="openLtv"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'openLtv'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.openLtv}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Close LTV</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="closeLtv"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'closeLtv'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.closeLtv}}%</p>
+                            }
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <p>Max Close LTV</p>
+                            @if (editableS()) {
+                                <mat-form-field class="w-32" subscriptSizing="dynamic">
+                                    <input type="number" matInput formControlName="maxCloseLtv"/>
+                                    <span matTextSuffix>%</span>
+                                    <ng-container *ngTemplateOutlet="percentagesValidatorsTemplate; context: {formControlName: 'maxCloseLtv'}"></ng-container>
+                                </mat-form-field>
+                            }@else {
+                                <p>{{extendedAssetStateS().state.config.maxCloseLtv}}%</p>
+                            }
+                        </div>
+                    </form>
+                }
+            </mat-tab>
+            <mat-tab label="Addresses">
+                @if (tabS() == 1) {
+                    <div class="flex flex-col gap-y-3 mt-3">
+                        <div class="flex justify-between">
+                            <p>Mint:</p>
+                            <address [address]="extendedAssetStateS().state.mintPubkey"></address>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Representative Mint:</p>
+                            <address [address]="extendedAssetStateS().state.representativeMintPubkey"></address>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Reserve Vault:</p>
+                            <address [address]="extendedAssetStateS().state.reserveVaultPubkey"></address>
+                        </div>
+                        <div class="flex justify-between">
+                            <p>Collateral Vault:</p>
+                            <address [address]="extendedAssetStateS().state.collateralVaultPubkey"></address>
+                        </div>
+                        <form class="flex justify-between items-center" [formGroup]="form">
+                            <p>Oracle Id</p>
+                            @if (editableS()) {
+                                <mat-form-field subscriptSizing="dynamic">
+                                    <input matInput formControlName="oracleId"/>
+                                    @if (form.get('oracleId').hasError('required')) {
+                                        <mat-error>This field is required</mat-error>
+                                    }
+                                </mat-form-field>
+                            }@else {
+                                <address [address]="extendedAssetStateS().state.config.oracleId"></address>
+                            }
+                        </form>
+                    </div>
+                }
+            </mat-tab>
+        </mat-tab-group>
+    }
+    <div drawerFooter #footer class="flex justify-end gap-x-5">
+        @if (editableS()) {
+            <div class="h-10 w-full flex justify-end items-center">
+                <button mat-flat-button (click)="updateAsset()">Save</button>
+            </div>
+        }
+    </div>
+</drawer-container>
+
+<ng-template #percentagesValidatorsTemplate let-formControlName="formControlName">
+    @if (form.get(formControlName).hasError('required')) {
+        <mat-error>This field is required</mat-error>
+    }
+    @if (form.get(formControlName).hasError('min')) {
+        <mat-error>Must be higher than 0</mat-error>
+    }
+    @if (form.get(formControlName).hasError('max')) {
+        <mat-error>Must be lower than 100</mat-error>
+    }
+</ng-template>
