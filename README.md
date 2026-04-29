@@ -1,125 +1,87 @@
-# Decentralized Bank Protocol (Inspired by Solend)
+# Decentralized Bank Protocol
 
-## Project Overview
+A **Solana lending protocol** (Solend-inspired): pooled deposits, collateralized borrows, per-asset rate and risk parameters, and liquidation flows. This monorepo contains the on-chain program, two Angular web apps, and a Spring Boot service for statistics and HTTP APIs.
 
-The Decentralized Bank Protocol is a robust lending and borrowing platform built on the Solana blockchain. Inspired by the architecture and functionality of established DeFi protocols like Solend, this project aims to provide efficient, secure, and transparent financial services within the Solana ecosystem. Users can deposit various SPL tokens as collateral, borrow other supported assets, and earn interest on their deposits.
+![GetBank UI — landing, assets, dashboard, transactions, borrow / withdraw / repay flows, and address panel](docs/images/getbank-ui-overview.png)
 
-## Features
+## Component READMEs
 
--   **Decentralized Lending & Borrowing**: Users can supply and borrow cryptographic assets without intermediaries.
--   **Interest Rate Model**: Dynamic interest rates for lending and borrowing, adjusting based on supply and demand.
--   **Collateral Management**: Support for multiple SPL tokens as collateral with configurable collateral factors.
--   **Liquidation Mechanism**: A robust liquidation engine to maintain protocol solvency and manage undercollateralized positions.
--   **Real-time Analytics (Statistics Backend)**: A dedicated backend service to track protocol statistics, user activities, and token prices.
--   **User-Friendly Frontend**: Intuitive web interfaces for both client-side users to interact with the protocol and an admin dashboard for protocol management.
+Each part has its own guide (tooling, env vars, commands):
 
-## Technologies Used
+| Area | What it is | README |
+|------|------------|--------|
+| **Smart contract** | Anchor program `get_bank`, Pyth, TS tooling under `apps/` | [**smart-contract/README.md**](smart-contract/README.md) |
+| **Frontend** | User DApp (`client/`, port 4200) and admin app (`admin/`, port 4201) | [**frontend/README.md**](frontend/README.md) |
+| **Statistics backend** | Spring Boot 3, JPA, PostgreSQL, CoinMarketCap, security filters | [**statistics-backend/README.md**](statistics-backend/README.md) |
 
-The project is comprised of three main components:
+## Repository layout
 
-### Smart Contract
--   **Blockchain**: Solana
--   **Language**: Rust
--   **Framework**: Anchor Framework (for Solana smart contract development)
+```
+decentralizedbank/
+├── frontend/
+│   ├── client/              # end-user Angular app
+│   └── admin/               # operator Angular app
+├── smart-contract/
+│   ├── programs/get_bank/
+│   ├── apps/                # pnpm workspace: liquidator, watcher, test
+│   ├── migrations/
+│   └── docs/
+└── statistics-backend/
+    ├── src/main/java/...
+    └── scripts/             # build / run / stop JAR helpers
+```
 
-### Frontend
--   **Framework**: Angular (TypeScript)
--   **Wallet Integration**: Solana Wallet Adapter
--   **Styling**: Tailwind CSS
+## Stack (summary)
 
-### Statistics Backend
--   **Language**: Java
--   **Framework**: Spring Boot
--   **Database**: PostgreSQL (or similar relational database)
--   **APIs**: Integration with CoinMarketCap (or other price oracles) and Solana RPC for real-time data.
+- **On-chain**: Solana, Rust, Anchor ~0.30, SPL, Pyth receiver SDK — details in [smart-contract/README.md](smart-contract/README.md).
+- **Web**: Angular 19, Material, Tailwind, `@solana/web3.js`, browser-extension wallet flow — details in [frontend/README.md](frontend/README.md).
+- **Backend**: Java 21, Spring Boot 3.4, PostgreSQL, scheduled token prices — details in [statistics-backend/README.md](statistics-backend/README.md).
 
-## Project Structure
-
-The repository is organized into the following main directories:
-
--   `frontend/`: Contains the client-facing decentralized application (DApp) and potentially an admin dashboard.
-    -   `frontend/admin/`: Admin dashboard application.
-    -   `frontend/client/`: Client-facing DApp.
--   `smart-contract/`: Houses the core Solana smart contract logic.
-    -   `programs/`: Anchor programs.
-    -   `migrations/`: Deployment scripts.
--   `statistics-backend/`: Contains the Java Spring Boot application for data aggregation and analytics.
-
-## Getting Started
-
-To get a local copy up and running, follow these steps.
+## Quick start
 
 ### Prerequisites
 
-Before you begin, ensure you have the following installed:
+- Node.js **LTS** (20.x or 22.x) and npm  
+- Rust, **Solana CLI**, and **Anchor CLI** (for the program)  
+- **JDK 21** and the Maven wrapper (`./mvnw`) in `statistics-backend`  
+- **PostgreSQL** (or compatible JDBC URL for JPA)  
+- Docker (optional) for local Postgres  
 
--   Node.js (LTS version) & npm
--   Rust & Cargo (for Solana/Anchor development)
--   Solana Tool Suite (`solana-cli`, `anchor-cli`)
--   Java Development Kit (JDK 17 or newer) & Maven (for Spring Boot backend)
--   Docker & Docker Compose (recommended for running local services like PostgreSQL)
+### Clone
 
-### Installation
-
-Clone the repository:
 ```bash
 git clone https://github.com/Hugongra/decentralizedbank-.git
 cd decentralizedbank-
 ```
 
-#### 1. Setup Smart Contract
+### Suggested local order
 
-Navigate to the `smart-contract` directory and follow its specific setup instructions (e.g., `anchor build`, `anchor deploy`). Refer to `smart-contract/README.md` for detailed steps.
+1. **Smart contract** — build and deploy to your cluster: [smart-contract/README.md](smart-contract/README.md).  
+2. **Statistics backend** — configure datasource and custom properties (the tree may not ship `src/main/resources/application*.yml`): [statistics-backend/README.md](statistics-backend/README.md).  
+3. **Frontend** — each app is independent; install and run from its folder:
 
-#### 2. Setup Statistics Backend
-
-Navigate to the `statistics-backend` directory.
 ```bash
-cd statistics-backend
-# Build the Spring Boot application
-./mvnw clean install
-# Run the application (ensure PostgreSQL or other database is running)
-./mvnw spring-boot:run
-```
-Refer to `statistics-backend/README.md` for detailed steps on database setup and configuration.
-
-#### 3. Setup Frontend
-
-Navigate to the `frontend` directory.
-```bash
-cd frontend
-# Install dependencies for both admin and client
-npm install --prefix admin
-npm install --prefix client
+cd frontend/client && npm ci && npm start    # http://localhost:4200
+# separate terminal:
+cd frontend/admin && npm ci && npm start     # http://localhost:4201
 ```
 
-##### Running the Frontend (Client)
-```bash
-cd client
-npm start
-```
+Proxies, production `env.prod.ts`, and ports are documented in [frontend/README.md](frontend/README.md).
 
-##### Running the Frontend (Admin)
-```bash
-cd admin
-npm start
-```
-Refer to `frontend/README.md` for detailed instructions on running and developing the frontend applications.
+## Product-oriented usage
 
-## Usage
-
--   **Client DApp**: Access the frontend to deposit assets, borrow funds, repay loans, and view your positions.
--   **Admin Dashboard**: Use the admin interface to manage protocol parameters, list new assets, and monitor overall system health.
--   **Statistics Backend**: The backend runs in the background, continuously collecting data from the Solana blockchain and price oracles to provide real-time insights.
+- **Client DApp** — supply and withdraw collateral, borrow and repay, inspect activity.  
+- **Admin** — bank and asset flows with wallet-gated routes as implemented in the admin app.  
+- **Statistics backend** — persistence and REST-style APIs; dev servers proxy browser `/api/*` to `localhost:8080` (see `frontend/*/proxy.conf.json`).
 
 ## Contributing
 
-Contributions are welcome! If you'd like to contribute, please fork the repository, create a new branch for your feature or bug fix, and submit a pull request.
+Fork the repo, use a feature branch, and open a pull request. For cross-cutting changes, keep program id, RPC URL, and API base paths aligned across contract, frontend env, and backend.
 
 ## License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
+There is no `LICENSE` file at the repository root yet; add one when you choose a license.
 
 ## Contact
 
-For any questions or inquiries, please open an issue on this repository or contact [Hugongra](https://github.com/Hugongra).
+Open an issue here or reach out via [Hugongra on GitHub](https://github.com/Hugongra).
