@@ -2,9 +2,10 @@
 
 A **Solana lending protocol** (Solend-inspired): pooled deposits, collateralized borrows, per-asset rate and risk parameters, and liquidation flows. This monorepo contains the on-chain program, two Angular web apps, and a Spring Boot service for statistics and HTTP APIs.
 
-![GetBank UI — landing, assets, dashboard, transactions, borrow / withdraw / repay flows, and address panel](docs/images/getbank-ui-overview.png)
 
 <img width="1600" height="1200" alt="WhatsApp Image 2026-05-07 at 19 11 25" src="https://github.com/user-attachments/assets/e41682e5-99d9-47d4-b30a-e0fee8863ba0" />
+
+![GetBank UI — landing, assets, dashboard, transactions, borrow / withdraw / repay flows, and address panel](docs/images/getbank-ui-overview.png)
 
 
 ## Component READMEs
